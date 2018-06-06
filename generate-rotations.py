@@ -9,11 +9,8 @@ import os
 def random_colors(n):
     colors = np.zeros((n, 3))
     for i, hue in enumerate(np.arange(0, 1, 1 / n)):
-        r, g, b = colorsys.hls_to_rgb(hue, 0.5, 1.0)
-        colors[i, 0] = r
-        colors[i, 1] = g
-        colors[i, 2] = b
-
+        rgb = colorsys.hls_to_rgb(hue, 0.5, 1.0)
+        colors[i] = rgb
     return colors
 
 
@@ -42,7 +39,7 @@ def main():
 
         cloud_folder = os.path.join(output, f'{c:04d}')
         if not os.path.exists(cloud_folder):
-            os.mkdir(cloud_folder)
+            os.makedirs(cloud_folder)
 
         for i in range(seq_length):
             angle = next(jump)
