@@ -23,7 +23,7 @@ def main():
     focal_length = 5
     save = True
     left, right = -pi / 2, pi / 2
-    output = 'data/clouds/'
+    output = 'data/clouds/train/'
 
     labels = np.zeros((num_clouds, seq_length), dtype=np.long)
     digitizer = RangeDigitizer1D(left, right, num_classes)
