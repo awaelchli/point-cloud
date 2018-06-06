@@ -69,7 +69,6 @@ def main():
 
         labels[c] = digitizer.classify(angles)
 
-
     # Write labels to file
     with open(os.path.join(output, 'labels.txt'), 'w') as f:
         for c in range(len(labels)):
