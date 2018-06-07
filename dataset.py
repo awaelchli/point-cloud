@@ -29,6 +29,8 @@ class PointCloudSequences(Dataset):
             p = os.path.join(self.path, name)
             if os.path.isdir(p):
                 folders += [p]
+
+        folders.sort()
         return folders
 
     def __len__(self):
@@ -37,8 +39,10 @@ class PointCloudSequences(Dataset):
     def __getitem__(self, index):
         folder = self.folders[index]
         images = []
-        for name in os.listdir(folder):
-            image = Image.open(os.path.join(folder, name))
+        image_names = os.listdir(folder)
+        image_names.sort()
+        for name in image_names:
+            image = Image.open(os.path.join(folder, name)).convert('RGB')
             image = self.transform(image)
             images.append(image)
 
