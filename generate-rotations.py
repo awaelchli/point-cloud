@@ -28,14 +28,14 @@ def main():
     labels = np.zeros((num_clouds, seq_length), dtype=np.long)
     digitizer = RangeDigitizer1D(left, right, num_classes)
 
-    for c in range(num_clouds):
-        pc = SpherePointCloud3D(num_points)
-        points = pc.get_points()
-        transformer = RotateY(points)
+    pc = SpherePointCloud3D(num_points)
+    points = pc.get_points()
+    transformer = RotateY(points)
+    colors = random_colors(num_points)
 
+    for c in range(num_clouds):
         jump = iter(Jump1D(left, right, 0))
         angles = []
-        colors = random_colors(num_points)
 
         cloud_folder = os.path.join(output, f'{c:04d}')
         if not os.path.exists(cloud_folder):
@@ -53,8 +53,14 @@ def main():
                         c=colors,
                         marker='+')
 
+            plt.axis([-0.6, 0.6, -0.6, 0.6])
+            plt.gca().axis('off')
             plt.gca().set_aspect('equal', adjustable='box')
-            plt.axis([-1, 1, -1, 1])
+            plt.gcf().frameon = False
+            w, h = plt.figaspect(1.0)
+            plt.gcf().set_figheight(h)
+            plt.gcf().set_figwidth(w)
+            plt.gcf().set_frameon(False)
 
             if save:
                 filename = os.path.join(cloud_folder, f'{i:04d}.png')
